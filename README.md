@@ -37,7 +37,7 @@
 7. **Audio Feature Extraction**
    Once, audio were downlaoded and stored, we calculated the audio features -  Mel-frequency cepstral coefficients (MFCCs), Spectral centroid, Spectral rolloff, Chroma features, Tempo, Zero-crossing rate, Root mean square energy, Spectral contrast, Tonnetz for each track and saved them in the dataset
 
-## Flow of the project - New Dataset Creation steps
+## Flow of the project
 
 ### 1. Install Requirement.txt
 
@@ -88,3 +88,7 @@ pip install -r requirements.txt
   ```
 * Reads all the mp3 files in ./downlaods/mp3 folder
 * Calculate audio features from the mp3 passed, create their columns and enter values of each feature for each track in the dataset
+
+## Models
+
+The models we've trained as part of this project can be found in the ./models folder
