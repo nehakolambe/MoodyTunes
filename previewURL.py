@@ -59,7 +59,7 @@ def get_preview_url(track_id):
         print(f"An error occurred: {e}")
         return None
 
-def process_uris_from_excel(input_file, output_file, save_path, start_row, end_row):
+def process_uris_from_excel(input_file, save_path, start_row, end_row):
     # Load the Excel file
     df = pd.read_excel(input_file)
 
@@ -103,8 +103,8 @@ def process_uris_from_excel(input_file, output_file, save_path, start_row, end_r
     filtered_df = df.iloc[start_row-1:end_row]
 
     # Save the filtered DataFrame back to an Excel file
-    filtered_df.to_excel(output_file, index=False)
-    print(f"Filtered and updated Excel file saved to: {output_file}")
+    filtered_df.to_excel(input_file, index=False)
+    print(f"Filtered and updated Excel file saved to: {input_file}")
 
 def organize_audio_files(base_path):
     # Define source and target directories
@@ -136,10 +136,9 @@ def organize_audio_files(base_path):
             print(f"Moved: {file_name} -> {destination_path}")
 
 input_file = "<ENTER-INPUT-FILE-PATH>"  # Path to your input Excel file
-output_file = "<ENTER-OUTPUT-FILE-PATH>"  # Path to save the updated Excel file
 save_path = "./download"         # Directory to save the audio files
 start_row = 5001                     # Starting row (inclusive, 1-based index)
 end_row = 6000                     # Ending row (inclusive, 1-based index)
 
-process_uris_from_excel(input_file, output_file, save_path, start_row, end_row)
+process_uris_from_excel(input_file, save_path, start_row, end_row)
 organize_audio_files(save_path)

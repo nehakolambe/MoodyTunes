@@ -1,6 +1,6 @@
 import pandas as pd
 
-def filter_columns_by_correlation(input_file, output_file, label_column='labels', threshold=0.05, start_index=18):
+def filter_columns_by_correlation(input_file, label_column='labels', threshold=0.05, start_index=18):
     # Load the Excel file
     data = pd.read_excel(input_file)
     
@@ -24,16 +24,15 @@ def filter_columns_by_correlation(input_file, output_file, label_column='labels'
     filtered_data = pd.concat([first_columns, data[valid_columns]], axis=1)
 
     # Save the filtered data to a new Excel file
-    filtered_data.to_excel(output_file, index=False)
+    filtered_data.to_excel(input_file, index=False)
 
-    print(f"\nFiltered columns saved to: {output_file}")
+    print(f"\nFiltered columns saved to: {input_file}")
 
 # Parameters
 input_file = "<PROVIDE-INPUT-FILE>"
-output_file = "<PROVIDE-OUTPUT-FILE>"
 label_column = "labels"  # Replace with the column name for labels
 threshold = 0.05  # Define your correlation threshold
 start_index = 18  # Define the starting column index
 
 # Call the function
-filter_columns_by_correlation(input_file, output_file, label_column, threshold, start_index)
+filter_columns_by_correlation(input_file, label_column, threshold, start_index)

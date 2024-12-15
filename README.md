@@ -1,6 +1,6 @@
 # MoodyTunes
 
-## Dataset Formation
+## Overview
 
 1. **Initial Dataset Details**
 
@@ -36,3 +36,55 @@
    * Stored the audio files for further processing.
 7. **Audio Feature Extraction**
    Once, audio were downlaoded and stored, we calculated the audio features -  Mel-frequency cepstral coefficients (MFCCs), Spectral centroid, Spectral rolloff, Chroma features, Tempo, Zero-crossing rate, Root mean square energy, Spectral contrast, Tonnetz for each track and saved them in the dataset
+
+## Flow of the project - New Dataset Creation steps
+
+### 1. Install Requirement.txt
+
+```
+pip install -r requirements.txt
+```
+
+### 2. Run trackAndArtistName.py
+
+* Enter spotify client Id and secret
+* Enter path of old dataset in input_file variable i.e., data/old_dataset.xlsx
+* ```
+  python3 trackAndArtistName.py
+  ```
+* This creates 2 new columns called trackname and atrist_name on the dataset
+
+### 3. Run datasetFormation.py
+
+* Enter Last.fm API key
+* Enter path of old dataset in input_file variable i.e., data/old_dataset.xlsx
+* ```
+  python3 datasetFormation.py
+  ```
+* This will get user tags for each track, preprocess tags, remove irrelavant tags, and saves tags in the form of columns in the dataset
+
+### 4. Run correlation.py
+
+* Enter path of old dataset in input_file variable i.e., data/old_dataset.xlsx
+* ```
+  python3 correlation.py
+  ```
+* This will eliminate tag columns whose correlation are less than ±5% i.e. loosely correlated
+
+### 5. Run previewURL.py
+
+* Enter path of old dataset in input_file variable i.e., data/old_dataset.xlsx
+* ```
+  python3 previewURL.py
+  ```
+* This will get 30 second preview URL of each track and save the URL in the dataset
+* It will download 30 seconds audio for each track in MP3 and wav format and store it in ./downloads/mp3 and ./downloads/wav folder respectively
+
+### 6. Run audioFeatures.py
+
+* Enter path of old dataset in output_excel variable i.e., data/old_dataset.xlsx
+* ```
+  python3 audioFeatures.py
+  ```
+* Reads all the mp3 files in ./downlaods/mp3 folder
+* Calculate audio features from the mp3 passed, create their columns and enter values of each feature for each track in the dataset

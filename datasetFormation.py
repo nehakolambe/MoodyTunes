@@ -78,41 +78,6 @@ def get_lastfm(params, api_key):
         time.sleep(3)
     return response.json()
 
-# def getTopTagsWithAllowedTags(annotations, api_key, allowed_tags):
-#     for i in range(len(annotations)):
-#         try:
-#             print(f'\nGet top tags for track {i+1}/{len(annotations)}')
-
-#             # Fetch top tags from Last.fm API
-#             track_tags_json = get_lastfm({
-#                 'method': 'track.getTopTags',
-#                 'artist': annotations.at[i, 'artist_name'],
-#                 'track': annotations.at[i, 'track_name']
-#             }, api_key)
-#             print("Call completed")
-#             # Initialize all tag columns to 0 for the current track
-#             for tag in allowed_tags:
-#                 if tag in annotations.columns:
-#                     annotations.at[i, tag] = 0
-#             print("set all as zeros")
-#             # Process top tags and update annotations
-#             if 'toptags' in track_tags_json and 'tag' in track_tags_json['toptags']:
-#                 track_tags_list = pd.DataFrame(track_tags_json['toptags']['tag'])
-#                 for j in range(len(track_tags_list)):
-#                     tag_name = track_tags_list.at[j, 'name']
-#                     tag_count = int(track_tags_list.at[j, 'count'])
-#                     print(tag_name)
-#                     # If the tag is in allowed_tags and an existing column, set its value to 1
-#                     if tag_count >= 50 and tag_name in allowed_tags and tag_name in annotations.columns:
-#                         annotations.at[i, tag_name] = 1
-#             else:
-#                 print(f"No valid tags found for track {annotations.at[i, 'track_name']} by {annotations.at[i, 'artist_name']}. Skipping.")
-#         except Exception as e:
-#             print(f"Error processing track {i+1}: {e}")
-
-#     return annotations
-
-
 def getTopTags(annotations, api_key):
     for i in range(len(annotations)):
         try:
@@ -282,10 +247,6 @@ def create_annotations(input_file, api_key):
             lastfm_urls.append(None)
             dataset_ids.append(None)
 
-    # # Add the new columns to the DataFrame
-    # df["url_lastfm"] = lastfm_urls
-    # df["id_dataset"] = dataset_ids
-
     # Add or update the 'url_lastfm' column
     if "url_lastfm" in df.columns:
         df["url_lastfm"] = lastfm_urls
@@ -300,20 +261,6 @@ def create_annotations(input_file, api_key):
 
     # Fetch top tags and update annotations
     df = getTopTags(df, api_key)
-    # allowed_tags_file_path = "allowed_tags.txt"  # Replace with your file path
-    # # with open(allowed_tags_file_path, "r") as file:
-    # #     words = file.read().split("\n")
-
-    # # # Filter words with "- " prefix
-    # # filtered_words = [word.strip() for word in words if word.strip().startswith("- ")]
-
-    # # # Remove the "- " prefix for clean output
-    # # allowed_tags = [re.sub(r"^- ", "", word) for word in filtered_words]
-
-    # with open(allowed_tags_file_path, "r") as file:
-    #     allowed_tags = [line.strip().lower() for line in file]
-
-    # df = getTopTagsWithAllowedTags(df, api_key, allowed_tags)
 
     # Clean and merge tags
     df = clean_and_merge_tags(df)
